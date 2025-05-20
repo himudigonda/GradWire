@@ -1,0 +1,225 @@
+python -m unittest discover tests
+
+--- Running test_add_by_const ---
+[test_add_by_const] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_by_const] Node 'y' ((x2+5)): Op=AddByConstOp, Inputs=['x2'], ConstAttr=5
+[test_add_by_const] Calculating gradients for y w.r.t [x2]...
+[test_add_by_const] Node 'grad_x2_node' (OnesLike((x2+5))): Op=OnesLikeOp, Inputs=['(x2+5)'], ConstAttr=None
+[test_add_by_const] Creating executor for [y, grad_x2_node]...
+[test_add_by_const] x2_val (feed_dict): [2. 2. 2.]
+[test_add_by_const] Running executor...
+[test_add_by_const] y_val (computed): [7. 7. 7.]
+[test_add_by_const] grad_x2_val (computed): [1. 1. 1.]
+[test_add_by_const] y_val (expected): [7. 7. 7.]
+[test_add_by_const] grad_x2_val (expected): [1. 1. 1.]
+--- test_add_by_const PASSED ---
+.
+--- Running test_add_mul_mix_1 ---
+[test_add_mul_mix_1] Node 'x1' (x1): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_1] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_1] Node 'x3' (x3): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_1] Node 'term_mult (x2*x3)' ((x2*x3)): Op=MulOp, Inputs=['x2', 'x3'], ConstAttr=None
+[test_add_mul_mix_1] Node 'term_mult_x1 ((x2*x3)*x1)' (((x2*x3)*x1)): Op=MulOp, Inputs=['(x2*x3)', 'x1'], ConstAttr=None
+[test_add_mul_mix_1] Node 'y (x1 + (x2*x3*x1))' ((x1+((x2*x3)*x1))): Op=AddOp, Inputs=['x1', '((x2*x3)*x1)'], ConstAttr=None
+[test_add_mul_mix_1] Calculating gradients for y w.r.t [x1, x2, x3]...
+[test_add_mul_mix_1] Node 'grad_x1_node' ((OnesLike((x1+((x2*x3)*x1)))+(OnesLike((x1+((x2*x3)*x1)))*(x2*x3)))): Op=AddOp, Inputs=['OnesLike((x1+((x2*x3)*x1)))', '(OnesLike((x1+((x2*x3)*x1)))*(x2*x3))'], ConstAttr=None
+[test_add_mul_mix_1] Node 'grad_x2_node' (((OnesLike((x1+((x2*x3)*x1)))*x1)*x3)): Op=MulOp, Inputs=['(OnesLike((x1+((x2*x3)*x1)))*x1)', 'x3'], ConstAttr=None
+[test_add_mul_mix_1] Node 'grad_x3_node' (((OnesLike((x1+((x2*x3)*x1)))*x1)*x2)): Op=MulOp, Inputs=['(OnesLike((x1+((x2*x3)*x1)))*x1)', 'x2'], ConstAttr=None
+[test_add_mul_mix_1] Creating executor for [y, grad_x1_node, grad_x2_node, grad_x3_node]...
+[test_add_mul_mix_1] x1_val (feed_dict): [1. 1. 1.]
+[test_add_mul_mix_1] x2_val (feed_dict): [2. 2. 2.]
+[test_add_mul_mix_1] x3_val (feed_dict): [3. 3. 3.]
+[test_add_mul_mix_1] Running executor...
+[test_add_mul_mix_1] y_val (computed): [7. 7. 7.]
+[test_add_mul_mix_1] grad_x1_val (computed): [7. 7. 7.]
+[test_add_mul_mix_1] grad_x2_val (computed): [3. 3. 3.]
+[test_add_mul_mix_1] grad_x3_val (computed): [2. 2. 2.]
+[test_add_mul_mix_1] y_val (expected): [7. 7. 7.]
+[test_add_mul_mix_1] grad_x1_val (expected): [7. 7. 7.]
+[test_add_mul_mix_1] grad_x2_val (expected): [3. 3. 3.]
+[test_add_mul_mix_1] grad_x3_val (expected): [2. 2. 2.]
+--- test_add_mul_mix_1 PASSED ---
+.
+--- Running test_add_mul_mix_2 ---
+[test_add_mul_mix_2] Node 'x1' (x1): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_2] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_2] Node 'x3' (x3): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_2] Node 'x4' (x4): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_2] Node 'term_mult_1 (x2*x3)' ((x2*x3)): Op=MulOp, Inputs=['x2', 'x3'], ConstAttr=None
+[test_add_mul_mix_2] Node 'term_mult_2 ((x2*x3)*x4)' (((x2*x3)*x4)): Op=MulOp, Inputs=['(x2*x3)', 'x4'], ConstAttr=None
+[test_add_mul_mix_2] Node 'y (x1 + (x2*x3*x4))' ((x1+((x2*x3)*x4))): Op=AddOp, Inputs=['x1', '((x2*x3)*x4)'], ConstAttr=None
+[test_add_mul_mix_2] Calculating gradients for y w.r.t [x1, x2, x3, x4]...
+[test_add_mul_mix_2] Node 'grad_x1_node' (OnesLike((x1+((x2*x3)*x4)))): Op=OnesLikeOp, Inputs=['(x1+((x2*x3)*x4))'], ConstAttr=None
+[test_add_mul_mix_2] Node 'grad_x2_node' (((OnesLike((x1+((x2*x3)*x4)))*x4)*x3)): Op=MulOp, Inputs=['(OnesLike((x1+((x2*x3)*x4)))*x4)', 'x3'], ConstAttr=None
+[test_add_mul_mix_2] Node 'grad_x3_node' (((OnesLike((x1+((x2*x3)*x4)))*x4)*x2)): Op=MulOp, Inputs=['(OnesLike((x1+((x2*x3)*x4)))*x4)', 'x2'], ConstAttr=None
+[test_add_mul_mix_2] Node 'grad_x4_node' ((OnesLike((x1+((x2*x3)*x4)))*(x2*x3))): Op=MulOp, Inputs=['OnesLike((x1+((x2*x3)*x4)))', '(x2*x3)'], ConstAttr=None
+[test_add_mul_mix_2] Creating executor...
+[test_add_mul_mix_2] x1_val: [1. 1. 1.], x2_val: [2. 2. 2.], x3_val: [3. 3. 3.], x4_val: [4. 4. 4.]
+[test_add_mul_mix_2] Running executor...
+[test_add_mul_mix_2] y_val (computed): [25. 25. 25.]
+[test_add_mul_mix_2] y_val (expected): [25. 25. 25.]
+--- test_add_mul_mix_2 PASSED ---
+.
+--- Running test_add_mul_mix_3 ---
+[test_add_mul_mix_3] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_3] Node 'x3' (x3): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_mul_mix_3] Constructing graph for z = x2*x2 + x2 + x3 + 3
+[test_add_mul_mix_3] Node 'x2_sq (x2*x2)' ((x2*x2)): Op=MulOp, Inputs=['x2', 'x2'], ConstAttr=None
+[test_add_mul_mix_3] Node 'z_term1 (x2*x2+x2)' (((x2*x2)+x2)): Op=AddOp, Inputs=['(x2*x2)', 'x2'], ConstAttr=None
+[test_add_mul_mix_3] Node 'z_term2 (x2*x2+x2+x3)' ((((x2*x2)+x2)+x3)): Op=AddOp, Inputs=['((x2*x2)+x2)', 'x3'], ConstAttr=None
+[test_add_mul_mix_3] Node 'z (x2*x2+x2+x3+3)' (((((x2*x2)+x2)+x3)+3)): Op=AddByConstOp, Inputs=['(((x2*x2)+x2)+x3)'], ConstAttr=3
+[test_add_mul_mix_3] Constructing graph for y = z*z + x3
+[test_add_mul_mix_3] Node 'z_sq (z*z)' ((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))): Op=MulOp, Inputs=['((((x2*x2)+x2)+x3)+3)', '((((x2*x2)+x2)+x3)+3)'], ConstAttr=None
+[test_add_mul_mix_3] Node 'y (z*z+x3)' (((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3)): Op=AddOp, Inputs=['(((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))', 'x3'], ConstAttr=None
+[test_add_mul_mix_3] Calculating gradients for y w.r.t [x2, x3]...
+[test_add_mul_mix_3] Node 'grad_x2_node' (((((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))+(((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))*x2))+(((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))*x2))): Op=AddOp, Inputs=['(((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))+(((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))*x2))', '(((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))*x2)'], ConstAttr=None
+[test_add_mul_mix_3] Node 'grad_x3_node' ((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))+((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))))): Op=AddOp, Inputs=['OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))', '((OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3))+(OnesLike(((((((x2*x2)+x2)+x3)+3)*((((x2*x2)+x2)+x3)+3))+x3))*((((x2*x2)+x2)+x3)+3)))'], ConstAttr=None
+[test_add_mul_mix_3] Creating executor...
+[test_add_mul_mix_3] x2_val: [2. 2. 2.], x3_val: [3. 3. 3.]
+[test_add_mul_mix_3] Running executor...
+[test_add_mul_mix_3] y_val (computed): [147. 147. 147.]
+[test_add_mul_mix_3] grad_x2_val (computed): [120. 120. 120.]
+[test_add_mul_mix_3] grad_x3_val (computed): [25. 25. 25.]
+[test_add_mul_mix_3] z_val_calc (manual): [12. 12. 12.]
+[test_add_mul_mix_3] y_val (expected): [147. 147. 147.]
+[test_add_mul_mix_3] grad_x2_val (expected): [120. 120. 120.]
+[test_add_mul_mix_3] grad_x3_val (expected): [25. 25. 25.]
+--- test_add_mul_mix_3 PASSED ---
+.
+--- Running test_add_two_vars ---
+[test_add_two_vars] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_two_vars] Node 'x3' (x3): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_add_two_vars] Node 'y' ((x2+x3)): Op=AddOp, Inputs=['x2', 'x3'], ConstAttr=None
+[test_add_two_vars] Calculating gradients for y w.r.t [x2, x3]...
+[test_add_two_vars] Node 'grad_x2_node' (OnesLike((x2+x3))): Op=OnesLikeOp, Inputs=['(x2+x3)'], ConstAttr=None
+[test_add_two_vars] Node 'grad_x3_node' (OnesLike((x2+x3))): Op=OnesLikeOp, Inputs=['(x2+x3)'], ConstAttr=None
+[test_add_two_vars] Creating executor for [y, grad_x2_node, grad_x3_node]...
+[test_add_two_vars] x2_val (feed_dict): [2. 2. 2.]
+[test_add_two_vars] x3_val (feed_dict): [3. 3. 3.]
+[test_add_two_vars] Running executor...
+[test_add_two_vars] y_val (computed): [5. 5. 5.]
+[test_add_two_vars] grad_x2_val (computed): [1. 1. 1.]
+[test_add_two_vars] grad_x3_val (computed): [1. 1. 1.]
+[test_add_two_vars] y_val (expected): [5. 5. 5.]
+[test_add_two_vars] grad_x2_val (expected): [1. 1. 1.]
+[test_add_two_vars] grad_x3_val (expected): [1. 1. 1.]
+--- test_add_two_vars PASSED ---
+.
+--- Running test_grad_of_grad ---
+[test_grad_of_grad] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_grad_of_grad] Node 'x3' (x3): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_grad_of_grad] Node 'x2_sq' ((x2*x2)): Op=MulOp, Inputs=['x2', 'x2'], ConstAttr=None
+[test_grad_of_grad] Node 'x2_x3' ((x2*x3)): Op=MulOp, Inputs=['x2', 'x3'], ConstAttr=None
+[test_grad_of_grad] Node 'y' (((x2*x2)+(x2*x3))): Op=AddOp, Inputs=['(x2*x2)', '(x2*x3)'], ConstAttr=None
+[test_grad_of_grad] Calculating 1st order gradients grad_y_x2, grad_y_x3...
+[test_grad_of_grad] Node 'grad_y_x2_node' ((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2))): Op=AddOp, Inputs=['((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))', '(OnesLike(((x2*x2)+(x2*x3)))*x2)'], ConstAttr=None
+[test_grad_of_grad] Node 'grad_y_x3_node' ((OnesLike(((x2*x2)+(x2*x3)))*x2)): Op=MulOp, Inputs=['OnesLike(((x2*x2)+(x2*x3)))', 'x2'], ConstAttr=None
+[test_grad_of_grad] Calculating 2nd order gradients grad_y_x2_x2, grad_y_x2_x3...
+[test_grad_of_grad] Node 'grad_y_x2_x2_node' ((((((OnesLike((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2)))*OnesLike(((x2*x2)+(x2*x3))))+(OnesLike((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2)))*OnesLike(((x2*x2)+(x2*x3)))))+(ZerosLike(((x2*x2)+(x2*x3)))*x3))+(ZerosLike(((x2*x2)+(x2*x3)))*x2))+(ZerosLike(((x2*x2)+(x2*x3)))*x2))): Op=AddOp, Inputs=['((((OnesLike((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2)))*OnesLike(((x2*x2)+(x2*x3))))+(OnesLike((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2)))*OnesLike(((x2*x2)+(x2*x3)))))+(ZerosLike(((x2*x2)+(x2*x3)))*x3))+(ZerosLike(((x2*x2)+(x2*x3)))*x2))', '(ZerosLike(((x2*x2)+(x2*x3)))*x2)'], ConstAttr=None
+[test_grad_of_grad] Node 'grad_y_x2_x3_node' (((OnesLike((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2)))*OnesLike(((x2*x2)+(x2*x3))))+(ZerosLike(((x2*x2)+(x2*x3)))*x2))): Op=AddOp, Inputs=['(OnesLike((((OnesLike(((x2*x2)+(x2*x3)))*x3)+(OnesLike(((x2*x2)+(x2*x3)))*x2))+(OnesLike(((x2*x2)+(x2*x3)))*x2)))*OnesLike(((x2*x2)+(x2*x3))))', '(ZerosLike(((x2*x2)+(x2*x3)))*x2)'], ConstAttr=None
+[test_grad_of_grad] Creating executor...
+[test_grad_of_grad] x2_val: [2. 2. 2.], x3_val: [3. 3. 3.]
+[test_grad_of_grad] Running executor...
+[test_grad_of_grad] y_val (computed): [10. 10. 10.]
+[test_grad_of_grad] grad_y_x2_val (computed): [7. 7. 7.]
+[test_grad_of_grad] grad_y_x3_val (computed): [2. 2. 2.]
+[test_grad_of_grad] grad_y_x2_x2_val (computed): [2. 2. 2.]
+[test_grad_of_grad] grad_y_x2_x3_val (computed): [1. 1. 1.]
+[test_grad_of_grad] yval (expected): [10. 10. 10.]
+--- test_grad_of_grad PASSED ---
+.
+--- Running test_identity ---
+[test_identity] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_identity] Node 'y (after y=x2 assignment)' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_identity] Calculating gradients for y w.r.t [x2]...
+[test_identity] Node 'grad_x2_node' (OnesLike(x2)): Op=OnesLikeOp, Inputs=['x2'], ConstAttr=None
+[test_identity] Creating executor for [y, grad_x2_node]...
+[test_identity] x2_val (feed_dict): [2. 2. 2.]
+[test_identity] Running executor...
+[test_identity] y_val (computed): [2. 2. 2.]
+[test_identity] grad_x2_val (computed): [1. 1. 1.]
+[test_identity] y_val (expected): [2. 2. 2.]
+[test_identity] grad_x2_val (expected): [1. 1. 1.]
+--- test_identity PASSED ---
+.
+--- Running test_matmul_two_vars ---
+[test_matmul_two_vars] Node 'x2_node_A' (x2_A_matrix): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_matmul_two_vars] Node 'x3_node_B' (x3_B_matrix): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_matmul_two_vars] Node 'y (MatMul(A,B))' (MatMul(x2_A_matrix,x3_B_matrix,A_T=False,B_T=False)): Op=MatMulOp, Inputs=['x2_A_matrix', 'x3_B_matrix'], ConstAttr=None
+[test_matmul_two_vars] Calculating gradients for y w.r.t [A, B]...
+[test_matmul_two_vars] Node 'grad_A_node (dL/dA)' (MatMul(OnesLike(MatMul(x2_A_matrix,x3_B_matrix,A_T=False,B_T=False)),x3_B_matrix,A_T=False,B_T=True)): Op=MatMulOp, Inputs=['OnesLike(MatMul(x2_A_matrix,x3_B_matrix,A_T=False,B_T=False))', 'x3_B_matrix'], ConstAttr=None
+[test_matmul_two_vars] Node 'grad_B_node (dL/dB)' (MatMul(x2_A_matrix,OnesLike(MatMul(x2_A_matrix,x3_B_matrix,A_T=False,B_T=False)),A_T=True,B_T=False)): Op=MatMulOp, Inputs=['x2_A_matrix', 'OnesLike(MatMul(x2_A_matrix,x3_B_matrix,A_T=False,B_T=False))'], ConstAttr=None
+[test_matmul_two_vars] Creating executor...
+[test_matmul_two_vars] x2_val_A:
+[[1. 2.]
+ [3. 4.]
+ [5. 6.]]
+[test_matmul_two_vars] x3_val_B:
+[[ 7.  8.  9.]
+ [10. 11. 12.]]
+[test_matmul_two_vars] Running executor...
+[test_matmul_two_vars] y_val (computed):
+[[ 27.  30.  33.]
+ [ 61.  68.  75.]
+ [ 95. 106. 117.]]
+[test_matmul_two_vars] grad_A_val (dL/dA computed):
+[[24. 33.]
+ [24. 33.]
+ [24. 33.]]
+[test_matmul_two_vars] grad_B_val (dL/dB computed):
+[[ 9.  9.  9.]
+ [12. 12. 12.]]
+[test_matmul_two_vars] y_val (expected):
+[[ 27.  30.  33.]
+ [ 61.  68.  75.]
+ [ 95. 106. 117.]]
+[test_matmul_two_vars] dL_dY_val (implicit for sum(Y)):
+[[1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]]
+[test_matmul_two_vars] grad_A_val (dL/dA expected):
+[[24. 33.]
+ [24. 33.]
+ [24. 33.]]
+[test_matmul_two_vars] grad_B_val (dL/dB expected):
+[[ 9.  9.  9.]
+ [12. 12. 12.]]
+--- test_matmul_two_vars PASSED ---
+.
+--- Running test_mul_by_const ---
+[test_mul_by_const] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_mul_by_const] Node 'y' ((x2*5)): Op=MulByConstOp, Inputs=['x2'], ConstAttr=5
+[test_mul_by_const] Calculating gradients for y w.r.t [x2]...
+[test_mul_by_const] Node 'grad_x2_node' ((OnesLike((x2*5))*5)): Op=MulByConstOp, Inputs=['OnesLike((x2*5))'], ConstAttr=5
+[test_mul_by_const] Creating executor for [y, grad_x2_node]...
+[test_mul_by_const] x2_val (feed_dict): [2. 2. 2.]
+[test_mul_by_const] Running executor...
+[test_mul_by_const] y_val (computed): [10. 10. 10.]
+[test_mul_by_const] grad_x2_val (computed): [5. 5. 5.]
+[test_mul_by_const] y_val (expected): [10. 10. 10.]
+[test_mul_by_const] grad_x2_val (expected): [5. 5. 5.]
+--- test_mul_by_const PASSED ---
+.
+--- Running test_mul_two_vars ---
+[test_mul_two_vars] Node 'x2' (x2): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_mul_two_vars] Node 'x3' (x3): Op=PlaceholderOp, Inputs=[], ConstAttr=None
+[test_mul_two_vars] Node 'y' ((x2*x3)): Op=MulOp, Inputs=['x2', 'x3'], ConstAttr=None
+[test_mul_two_vars] Calculating gradients for y w.r.t [x2, x3]...
+[test_mul_two_vars] Node 'grad_x2_node' ((OnesLike((x2*x3))*x3)): Op=MulOp, Inputs=['OnesLike((x2*x3))', 'x3'], ConstAttr=None
+[test_mul_two_vars] Node 'grad_x3_node' ((OnesLike((x2*x3))*x2)): Op=MulOp, Inputs=['OnesLike((x2*x3))', 'x2'], ConstAttr=None
+[test_mul_two_vars] Creating executor for [y, grad_x2_node, grad_x3_node]...
+[test_mul_two_vars] x2_val (feed_dict): [2. 2. 2.]
+[test_mul_two_vars] x3_val (feed_dict): [3. 3. 3.]
+[test_mul_two_vars] Running executor...
+[test_mul_two_vars] y_val (computed): [6. 6. 6.]
+[test_mul_two_vars] grad_x2_val (computed): [3. 3. 3.]
+[test_mul_two_vars] grad_x3_val (computed): [2. 2. 2.]
+[test_mul_two_vars] y_val (expected): [6. 6. 6.]
+[test_mul_two_vars] grad_x2_val (expected): [3. 3. 3.]
+[test_mul_two_vars] grad_x3_val (expected): [2. 2. 2.]
+--- test_mul_two_vars PASSED ---
+.
+----------------------------------------------------------------------
+Ran 10 tests in 0.006s
+
+OK
